@@ -5,20 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module Q&A - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for system font stack */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen">
-    <header class="bg-blue-500 text-white p-4" role="banner">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-xl font-bold">Module Q&A Dashboard</h1>
-            <a href="app/logout.php" class="bg-red-500 px-4 py-2 rounded hover:bg-red-600" aria-label="Log out">Log Out</a>
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-10" role="banner">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+            <h1 class="text-3xl font-extrabold text-gray-700 tracking-wider">Module Q&A</h1>
+            <nav class="mt-4 sm:mt-0 flex flex-wrap gap-3" aria-label="Main navigation">
+                <a href="#ask" class="text-gray-700 hover:bg-gray-200 hover:text-yellow-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-600" aria-label="Ask a question">Ask Question</a>
+                <a href="#questions" class="text-gray-700 bg-gray-200 hover:bg-gray-200 hover:text-yellow-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-600" aria-label="View all questions">Questions</a>
+                <a href="app/logout.php" class="text-gray-700 hover:bg-gray-200 hover:text-yellow-600 px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-600" aria-label="Log out">Sign Out</a>
+            </nav>
         </div>
     </header>
-    <div class="container mx-auto p-4">
-        <div id="user-options" class="space-y-4">
-            <!-- Options populated by JavaScript based on role -->
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Ask Question Form (FR3) -->
+        <div class="bg-white rounded-xl shadow-md p-8 mb-8 bg-gradient-to-br from-white to-gray-50">
+            <h2 class="text-xl font-semibold text-gray-700 mb-6 tracking-wide">Ask a Question</h2>
+            <form action="app/ask.php" method="POST" class="space-y-6">
+                <div>
+                    <label for="module" class="block text-sm font-medium text-gray-700">Module</label>
+                    <select id="module" name="module" required class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300" aria-required="true">
+                        <option value="">Select a module</option>
+                        <option value="5530CSMM">Mobile and Web Development</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="question" class="block text-sm font-medium text-gray-700">Question</label>
+                    <textarea id="question" name="question" rows="4" required class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300" aria-required="true"></textarea>
+                </div>
+                <button type="submit" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300 font-medium">Submit</button>
+            </form>
         </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Questions Filter (FR4, FR7, FR8) -->
+        <div class="bg-white rounded-xl shadow-md p-8 mb-8 bg-gradient-to-br from-white to-gray-50">
+            <h2 class="text-xl font-semibold text-gray-700 mb-6 tracking-wide">Filter Questions</h2>
+            <form id="filter-form" class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1">
+                    <label for="filter-module" class="block text-sm font-medium text-gray-700">Module</label>
+                    <select id="filter-module" name="module" class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300">
+                        <option value="">All Modules</option>
+                        <option value="5530CSMM">Mobile and Web Development</option>
+                    </select>
+                </div>
+                <div class="flex-1">
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status" name="status" class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300">
+                        <option value="">All</option>
+                        <option value="answered">Answered</option>
+                        <option value="unanswered">Unanswered</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Questions List (FR4, FR6, FR7, FR8) -->
+        <div id="questions-list" class="space-y-8">
+            <!-- Question 1 -->
+            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-white to-gray-50">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-12 text-center">
+                        <button class="text-gray-500 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600" aria-label="Vote up question"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                        <div class="text-sm font-medium text-gray-700">2</div>
+                    </div>
+                    <div class="flex-1 ml-4">
+                        <h3 class="text-lg font-semibold text-gray-700">
+                            <a href="#q1" class="hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-300">How do I center a div in CSS?</a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">Asked by User1 on April 3, 2025 | Module: 5530CSMM</p>
+                        <div class="mt-4 border-t border-gray-200 pt-4">
+                            <p class="text-gray-800">Center a div with <code class="bg-gray-100 px-1 rounded text-sm">margin: auto;</code> for fixed-width elements, or use <code class="bg-gray-100 px-1 rounded text-sm">display: flex; justify-content: center;</code> for a flexbox solution.</p>
+                            <p class="text-sm text-gray-600 mt-2">Answered by User2 on April 3, 2025</p>
+                            <!-- Staff Answer Form (FR5) -->
+                            <form action="app/answer.php" method="POST" class="mt-4 space-y-4 hidden" id="answer-form-q1">
+                                <input type="hidden" name="question_id" value="q1">
+                                <div>
+                                    <label for="answer-q1" class="block text-sm font-medium text-gray-700">Your Answer</label>
+                                    <textarea id="answer-q1" name="answer" rows="3" required class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300" aria-required="true"></textarea>
+                                </div>
+                                <button type="submit" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300 font-medium">Post Answer</button>
+                            </form>
+                            <button class="text-sm text-gray-700 hover:text-yellow-600 mt-2 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-300 hidden" onclick="toggleAnswerForm('q1')" id="toggle-answer-q1" aria-label="Toggle answer form">Answer as Staff</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Question 2 -->
+            <div class="bg-white rounded-xl shadow-md p-8 hover:shadow-lg transition-shadow duration-300 bg-gradient-to-br from-white to-gray-50">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 w-12 text-center">
+                        <button class="text-gray-500 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600" aria-label="Vote up question"><svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                        <div class="text-sm font-medium text-gray-700">5</div>
+                    </div>
+                    <div class="flex-1 ml-4">
+                        <h3 class="text-lg font-semibold text-gray-700">
+                            <a href="#q2" class="hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-300">What is the difference between let and const in JavaScript?</a>
+                        </h3>
+                        <p class="text-sm text-gray-600 mt-1">Asked by User3 on April 2, 2025 | Module: 5530CSMM</p>
+                        <div class="mt-4 border-t border-gray-200 pt-4 space-y-4">
+                            <div>
+                                <p class="text-gray-800"><code class="bg-gray-100 px-1 rounded text-sm">let</code> allows reassignment, while <code class="bg-gray-100 px-1 rounded text-sm">const</code> does not. Both are block-scoped, unlike <code class="bg-gray-100 px-1 rounded text-sm">var</code>.</p>
+                                <p class="text-sm text-gray-600 mt-2">Answered by User4 on April 2, 2025</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-800"><code class="bg-gray-100 px-1 rounded text-sm">const</code> requires an initial value, and while the variable can’t be reassigned, its object properties can be mutated.</p>
+                                <p class="text-sm text-gray-600 mt-2">Answered by User5 on April 3, 2025</p>
+                            </div>
+                            <!-- Staff Answer Form (FR5) -->
+                            <form action="app/answer.php" method="POST" class="mt-4 space-y-4 hidden" id="answer-form-q2">
+                                <input type="hidden" name="question_id" value="q2">
+                                <div>
+                                    <label for="answer-q2" class="block text-sm font-medium text-gray-700">Your Answer</label>
+                                    <textarea id="answer-q2" name="answer" rows="3" required class="mt-1 w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300" aria-required="true"></textarea>
+                                </div>
+                                <button type="submit" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 hover:text-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-all duration-300 font-medium">Post Answer</button>
+                            </form>
+                            <button class="text-sm text-gray-700 hover:text-yellow-600 mt-2 focus:outline-none focus:ring-2 focus:ring-yellow-600 transition-colors duration-300 hidden" onclick="toggleAnswerForm('q2')" id="toggle-answer-q2" aria-label="Toggle answer form">Answer as Staff</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/scripts.js"></script>
+    <script>
+        // Toggle staff answer form (client-side, role-based visibility should be handled server-side)
+        function toggleAnswerForm(questionId) {
+            const form = document.getElementById(`answer-form-${questionId}`);
+            form.classList.toggle('hidden');
+        }
+
+        // Sample filter logic (replace with PHP/AJAX for real implementation)
+        document.getElementById('filter-form').addEventListener('change', function() {
+            // Implement AJAX to fetch filtered questions based on module/status
+            console.log('Filter changed:', this.module.value, this.status.value);
+        });
+    </script>
 </body>
 </html>
