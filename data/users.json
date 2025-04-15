@@ -1,12 +1,42 @@
 [
   {
-      "username": "student1",
-      "password": "$2y$10$TxgBxlsrtMveW6rR1NfDAulalJg3I5BKZLi62rASN/IB18C4zfdpK", 
-      "role": "student"
+    "username": "STUDENT1",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "student"
   },
   {
-      "username": "staff1",
-      "password": "$2y$10$XUoafESGrmlK6WLv3yy60uIMwxVW8CPpSPhdWRSi9Akfc/swGuAfO", 
-      "role": "staff"
+    "username": "STUDENT2",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "student"
+  },
+  {
+    "username": "STUDENT3",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "student"
+  },
+  {
+    "username": "STUDENT4",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "student"
+  },
+  {
+    "username": "STUDENT5",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "student"
+  },
+  {
+    "username": "CSMSTAFF1",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "staff"
+  },
+  {
+    "username": "CSMSTAFF2",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "staff"
+  },
+  {
+    "username": "CSMSTAFF3",
+    "password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "role": "staff"
   }
 ]

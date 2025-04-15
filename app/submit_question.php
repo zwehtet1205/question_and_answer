@@ -11,8 +11,17 @@ $question = trim($_POST['question']);
 // Read banned words
 $banned_words = file('../data/banned_words.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 foreach ($banned_words as $word) {
+
+    $word = trim($word);
+    // Check if the word is a comment (e.g., starts with #) or empty
+    if (empty($word) || $word[0] === '#') {
+        continue;
+    }
+    // Check if the word is present in the question
+
     if (stripos($question, $word) !== false) {
-        header('Location: ../submit_question.html?error=profanity_detected');
+        
+        header('Location: ../dashboard.html?error=profanity_detected');
         exit;
     }
 }
@@ -30,6 +39,7 @@ $new_question = [
 $questions[] = $new_question;
 file_put_contents('../data/questions.json', json_encode($questions, JSON_PRETTY_PRINT));
 
-header('Location: ../submit_question.html?success=question_submitted');
+header('Location: ../dashboard.html?success=question_submitted');
+
 exit;
 ?>

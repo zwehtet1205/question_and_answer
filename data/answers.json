@@ -1,8 +1,14 @@
 [
-  {
-      "question_id": 1,
-      "answer": "PHP is a server-side scripting language.",
-      "answered_by": "staff1",
-      "timestamp": "2025-05-01T12:00:00Z"
-  }
+    {
+        "question_id": 1,
+        "answer": "PHP is a server-side scripting language.",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-01T12:00:00Z"
+    },
+    {
+        "question_id": 2,
+        "answer": "You can center a div by three ways.",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-04-15T06:48:39+00:00"
+    }
 ]

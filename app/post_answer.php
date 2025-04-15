@@ -18,6 +18,6 @@ $answers[] = [
 ];
 file_put_contents('../data/answers.json', json_encode($answers, JSON_PRETTY_PRINT));
 
-header('Location: ../view_questions.html?success=answer_posted');
+header('Location: ../dashboard.html?success=answer_posted');
 exit;
 ?>
