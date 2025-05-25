@@ -1,104 +1,353 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="data/logo.png" type="image/png">
-    <title>Module Q&A - Dashboard</title>
-    <link href="css/tailwind.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AskMyModule - Dashboard</title>
+    <link rel="icon" href="data/logo.png" type="image/png" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #F37021;
+            --primary-hover: #e55e0f;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
+            --tag-bg: #e5e7eb;
+            --tag-text: #374151;
+            --answered-bg: #15803d;
+            --answered-text: #d1fae5;
+            --link-hover: #c05621;
+        }
+
+        .dark {
+            --text-primary: #f5f5f5;
+            --text-secondary: #d1d5db;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --border-color: #374151;
+            --glass-bg: #1a1a1a;
+            --glass-border: #374151;
+            --tag-bg: #4b5563;
+            --tag-text: #fef08a;
+            --answered-bg: #16a34a;
+            --answered-text: #dcfce7;
+            --link-hover: #f97316;
+        }
+
+        body {
+            /* background-color: var(--bg-primary); */
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass {
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            background-color: var(--glass-bg);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .primary-text {
+            color: var(--primary-color);
+        }
+
+        .primary-bg {
+            background-color: var(--primary-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .primary-bg:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .answered {
+            background-color: var(--answered-bg);
+            color: var(--answered-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .link-hover:hover {
+            color: var(--link-hover);
+        }
+
+        input,
+        select,
+        textarea {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.2);
+        }
+
+        header {
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        footer {
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        #darkModeToggle .fa-sun,
+        .dark #darkModeToggle .fa-moon {
+            display: inline;
+        }
+
+        #darkModeToggle .fa-moon,
+        .dark #darkModeToggle .fa-sun {
+            display: none;
+        }
+
+        #signOutLink .fa-sign-out-alt {
+            display: inline;
+        }
+
+        @media (max-width: 767px) {
+
+            #darkModeToggle span:not(.fa-sun):not(.fa-moon),
+            #signOutLink span:not(.fa-sign-out-alt) {
+                display: none;
+            }
+        }
+
+        .dark.bg-spot-pattern {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            position: relative;
+            background-attachment: fixed;
+        }
+
+    
+
+        .dark.bg-spot-pattern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 10.5%);
+            background-size: 12px 12px;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        
+
+        .light.bg-spot-pattern {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            position: relative;
+        }
+
+        .light.bg-spot-pattern:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.5%);
+            background-size: 12px 12px;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+    </style>
 </head>
-<body class="bg-gray-200/30 min-h-screen text-gray-900 font-serif">
 
-    <!-- Preloader -->
-    <div id="preloader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
-        <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-orange-500"></div>
-    </div>
-    <!-- /Preloader -->
-
-    <!-- Notification -->
-    <div id="notification" class="hidden fixed top-4 right-4 z-50 max-w-sm p-4 rounded-lg shadow-lg transition-all duration-300">
-        <p id="notification-message"></p>
-    </div>
-    <!-- /Notification -->
-
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-10 border-b border-orange-500/30" role="banner">
-        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-            <a href="dashboard.html" class="text-gray-900 hover:text-gray-800 transition-all duration-300 flex items-center space-x-2">
-                <img src="data/logo.png" alt="Logo" class="h-10 w-10 rounded-full">
-                <span class="text-xl font-bold"><span class="text-primary">Module</span> <span class="text-secondary">Q&A</span></span>
-            </a>
-            <a href="app/logout.php" class="text-gray-900 hover:bg-gray-100/20 hover:text-gray-800 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gray-800">Sign Out</a>
+<body class="font-sans min-h-screen bg-spot-pattern" id="themeBody">
+    <header class="sticky top-0 z-20 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <a href="dashboard.html" class="flex items-center space-x-3 text-[var(--primary-color)]">
+                    <img src="data/logo.png" alt="Logo" class="h-10 w-10" />
+                    <span class="text-xl font-bold tracking-wide md:inline-block hidden">AskMyModule</span>
+                </a>
+            </div>
+            <nav class="flex space-x-4 items-center">
+                <button id="darkModeToggle" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                    <span class="md:inline-block">Toggle Theme</span>
+                </button>
+                <a id="signOutLink" href="app/logout.php"
+                    class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="md:inline-block">Sign Out</span>
+                </a>
+            </nav>
         </div>
     </header>
-    <!-- /Header -->
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-10">
-        <!-- Ask Question Form -->
-        <div id="ask-question-form" class="bg-white rounded-2xl shadow-xl p-10 mb-10 border border-gray-200/50">
-            <h2 class="text-2xl font-semibold text-primary mb-6 tracking-wide">Ask a Question</h2>
-            <form action="app/submit_question.php" method="POST" class="space-y-6" aria-label="Ask a question form">
-                <!-- Module -->
-                <div>
-                    <label for="module" class="block text-sm font-medium text-secondary">Module</label>
-                    <select id="module" name="module" class="w-full border border-gray-200/50 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all duration-300 mt-1 px-4 py-3 text-gray-900 bg-white">
-                        <option value="">Select Module</option>
-                        <!-- <option value="5530CSMM">Mobile and Web Development</option> -->
-                    </select>
-                </div>
-                <!-- /Module -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <section class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold primary-text mb-3">Welcome to AskMyModule</h1>
+            <p class="text-lg max-w-2xl mx-auto">Connect, ask questions, and share knowledge with students and
+                instructors across all your modules.</p>
+        </section>
 
-                <!-- Question -->
-                <div>
-                    <label for="question" class="block text-sm font-medium text-secondary">Question</label>
-                    <textarea id="question" name="question" rows="4" required class="w-full border border-gray-200/50 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all duration-300 mt-1 px-4 py-3 text-gray-900 bg-white" aria-required="true"></textarea>
-                </div>
-                <!-- /Question -->
-                
-                <button type="submit" class="bg-gray-100 text-gray-900 rounded-md hover:bg-gray-200 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all duration-300 font-medium px-6 py-3">Submit</button>
-            </form>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <section class="lg:col-span-3 space-y-6" id="question-list">
+                <article class="glass p-6 rounded-xl">
+                    <h3
+                        class="text-lg font-semibold cursor-pointer hover:text-[var(--primary-color)] transition-colors">
+                        How do I deploy my Laravel app to Heroku?</h3>
+                    <p class="text-sm mt-2">Posted in <span class="primary-text font-medium">Web Development</span> —
+                        <span class="italic">2 hours ago</span></p>
+                    <div class="mt-3 text-sm flex flex-wrap gap-2">
+                        Tags:
+                        <span class="px-2 py-0.5 rounded tag">laravel</span>
+                        <span class="px-2 py-0.5 rounded tag">heroku</span>
+                    </div>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-xs font-semibold px-2 py-1 rounded answered">Answered</span>
+                        <a href="#" class="text-sm font-medium text-[var(--primary-color)] link-hover">View Answers
+                            →</a>
+                    </div>
+                </article>
+
+                <section class="glass rounded-xl p-6">
+                    <h2 class="text-xl font-semibold primary-text mb-4">Ask a Question</h2>
+                    <form action="app/submit_question.php" method="POST" class="space-y-5">
+                        <div>
+                            <label for="module" class="block text-sm">Module</label>
+                            <select id="module" name="module" required class="w-full rounded-lg px-4 py-2.5">
+                                <option value="">Select Module</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="question" class="block text-sm">Question</label>
+                            <textarea id="question" name="question" rows="5" required
+                                class="w-full rounded-lg px-4 py-2.5 resize-y"></textarea>
+                        </div>
+                        <div>
+                            <label for="tags" class="block text-sm">Tags (comma separated)</label>
+                            <input type="text" name="tags" id="tags" class="w-full rounded-lg px-4 py-2.5"
+                                placeholder="e.g., laravel, deployment" />
+                        </div>
+                        <button type="submit"
+                            class="w-full primary-bg hover:bg-orange-600 text-white font-semibold rounded-lg px-4 py-2.5">Submit
+                            Question</button>
+                    </form>
+                </section>
+            </section>
+
+            <aside class="lg:col-span-1 space-y-8">
+                <section class="glass rounded-xl p-6">
+                    <h2 class="text-xl font-semibold primary-text mb-4">Filter Questions</h2>
+                    <form id="filter-form" class="space-y-5">
+                        <div>
+                            <label for="filter-module" class="block text-sm">Module</label>
+                            <select id="filter-module" name="module" class="w-full rounded-lg px-4 py-2.5">
+                                <option value="">All Modules</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="filter-status" class="block text-sm">Status</label>
+                            <select id="filter-status" name="status" class="w-full rounded-lg px-4 py-2.5">
+                                <option value="">All</option>
+                                <option value="answered">Answered</option>
+                                <option value="unanswered">Unanswered</option>
+                            </select>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="glass rounded-xl p-6">
+                    <h2 class="text-xl font-semibold primary-text mb-4">Quick Stats</h2>
+                    <ul class="text-sm space-y-3">
+                        <li class="flex justify-between">Total Questions: <span class="font-bold">128</span></li>
+                        <li class="flex justify-between">Answered: <span class="text-green-500 font-bold">90</span></li>
+                        <li class="flex justify-between">Unanswered: <span class="text-red-500 font-bold">38</span></li>
+                    </ul>
+                </section>
+            </aside>
         </div>
-        <!-- /Ask Question Form -->
-
-        <!-- Questions Filter -->
-        <div class="bg-white rounded-2xl shadow-xl p-10 mb-10 border border-gray-200/50">
-            <h2 class="text-2xl font-semibold text-primary mb-6 tracking-wide">Filter Questions</h2>
-            <form id="filter-form" class="flex flex-col sm:flex-row gap-4" aria-label="Filter questions form">
-                <!-- Module -->
-                <div class="flex-1">
-                    <label for="filter-module" class="block text-sm font-medium text-secondary">Module</label>
-                    <select id="filter-module" name="module" class="w-full border border-gray-200/50 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all duration-300 mt-1 px-4 py-3 text-gray-900 bg-white">
-                        <option value="">All Modules</option>
-                        <!-- <option value="5530CSMM">Mobile and Web Development</option> -->
-                    </select>
-                </div>
-                <!-- /Module -->
-                
-                <!-- Status -->
-                <div class="flex-1">
-                    <label for="status" class="block text-sm font-medium text-secondary">Status</label>
-                    <select id="filter-status" name="status" class="w-full border border-gray-200/50 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 transition-all duration-300 mt-1 px-4 py-3 text-gray-900 bg-white">
-                        <option value="">All</option>
-                        <option value="answered">Answered</option>
-                        <option value="unanswered">Unanswered</option>
-                    </select>
-                </div>
-                <!-- /Status -->
-            </form>
-        </div>
-        <!-- /Questions Filter -->
-
-        <!-- Questions List -->
-        <div id="question-list" class="space-y-8">
-            <!-- Questions will be dynamically generated here -->
-        </div>
-        <!-- /Questions List -->
     </main>
 
-    <script src="js/tailwind.min.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/dashboard.js"></script>
+    <footer class="mt-16 py-12 bg-[var(--bg-header)] border-t transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <a href="dashboard.html" class="flex items-center space-x-3 text-[var(--primary-color)] mb-4">
+                        <img src="data/logo.png" alt="Logo" class="h-8 w-8" />
+                        <span class="text-lg font-bold tracking-wide">AskMyModule</span>
+                    </a>
+                    <p class="text-sm text-[var(--text-secondary)]">Designed for the Mobile and Web Development Module -
+                        LJMU</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-[var(--text-primary)] mb-4">Links</h3>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="about.html"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">About</a>
+                        </li>
+                        <li><a href="contact.html"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">Contact</a>
+                        </li>
+                        <li><a href="privacy.html"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="terms.html"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">Terms
+                                of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-[var(--text-primary)] mb-4">Connect</h3>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="https://x.com"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">X</a>
+                        </li>
+                        <li><a href="https://linkedin.com"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">LinkedIn</a>
+                        </li>
+                        <li><a href="mailto:support@askmymodule.com"
+                                class="text-[var(--text-secondary)] hover:text-[var(--primary-color)] link-hover transition-colors">Email
+                                Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-[var(--border-color)] text-center">
+                <p class="text-sm text-[var(--text-secondary)]">© 2025 AskMyModule. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.getElementById('darkModeToggle');
+        const body = document.getElementById('themeBody');
+
+        // Load theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        body.classList.add(savedTheme);
+
+        toggle.addEventListener('click', () => {
+            const isLight = body.classList.contains('light');
+            body.classList.toggle('light', !isLight);
+            body.classList.toggle('dark', isLight);
+
+            localStorage.setItem('theme', isLight ? 'dark' : 'light');
+        });
+    </script>
 </body>
+
 </html>

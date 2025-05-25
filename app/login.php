@@ -1,21 +1,36 @@
 <?php
+
 session_start();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+
+    // Sanitize input data
+    $name = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_STRING);
+    $password = filter_input(INPUT_POST, 'hashed_password', FILTER_SANITIZE_STRING);
 
     // Read users.json
-    $users = json_decode(file_get_contents('../data/users.json'), true);
-    foreach ($users as $user) {
-        if ($user['username'] === $username && password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = $user['role'];
+    $user_data = json_decode(file_get_contents('../data/users_db.json'), true);
+
+    $is_authenticated = false;
+
+    foreach ($user_data as $record) {
+        if ($record['user_name'] === $name && password_verify($password, $record['hashed_password'])) {
+            // set session variables
+            $_SESSION['user_name'] = $username;
+            $_SESSION['user_type'] = $user['user_type'];
+
+            $is_authenticated = true;
+
+            // Redirect to dashboard
             header('Location: ../dashboard.html');
-            exit;
+            exit();
         }
     }
     // Invalid credentials
-    header('Location: ../index.html?error=invalid_credentials');
-    exit;
+    if (!$is_authenticated) {
+        $_SESSION['error'] = 'Invalid username or password.';
+        header('Location: ../login.html');
+        exit();
+    }
 }
 ?>
