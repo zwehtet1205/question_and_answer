@@ -7,7 +7,7 @@ require_once 'helpers.php';
 $userType = getSessionVariable('user_type');
 
 if (!empty($userType)) {
-    sendJsonResponse(['role' => $userType]);
+    sendJsonResponse(['type' => $userType]);
 } else {
-    sendErrorResponse(403, ['error' => 'User role not available']);
+    sendErrorResponse(403, ['error' => 'User type not available']);
 }

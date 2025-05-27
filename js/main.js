@@ -131,9 +131,9 @@ $(document).ready(function () {
     }
 
     function fetchUserRole() {
-        $.getJSON('app/get_role.php')
+        $.getJSON('app/user_type.php')
             .done(data => {
-                if (data.role === 'staff') {
+                if (data.type === 'staff') {
                     $('#ask-question-form').remove();
                     $('.answer-form-toggle').removeClass('hidden');
                 }
