@@ -7,174 +7,13 @@
     <title>AskMyModule - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #F37021;
-            --primary-hover: #e55e0f;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9fafb;
-            --border-color: #e5e7eb;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --error-bg: #fef2f2;
-            --error-text: #dc2626;
-        }
-
-        .dark {
-            --text-primary: #f5f5f5;
-            --text-secondary: #d1d5db;
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --border-color: #374151;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --error-bg: #7f1d1d;
-            --error-text: #fecaca;
-        }
-
-
-
-        body {
-            /* background-color: var(--bg-primary); */
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .bg-spot-pattern.dark {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            position: relative;
-        }
-
-        .bg-sport-pattern.dark ::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 10.5%);
-            background-size: 12px 12px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-        .bg-spot-pattern.light {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            position: relative;
-        }
-
-        .bg-spot-pattern.cursor-active::before {
-            background-image: radial-gradient(circle at var(--cursor-x) var(--cursor-y),
-                    rgba(255, 255, 255, 0.15) 10%,
-                    transparent 10.5%);
-            opacity: 0.75;
-        }
-
-        .glass {
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            background-color: var(--glass-bg);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .primary-text {
-            color: var(--primary-color);
-        }
-
-        .primary-bg {
-            background-color: var(--primary-color);
-            transition: background-color 0.3s ease;
-        }
-
-        .primary-bg:hover {
-            background-color: var(--primary-hover);
-        }
-
-        input {
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.2);
-        }
-
-        .error {
-            background-color: var(--error-bg);
-            color: var(--error-text);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        header {
-            background-color: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        #darkModeToggle .fa-sun,
-        .dark #darkModeToggle .fa-moon {
-            display: inline;
-        }
-
-        #darkModeToggle .fa-moon,
-        .dark #darkModeToggle .fa-sun {
-            display: none;
-        }
-
-        #signOutLink .fa-sign-out-alt {
-            display: inline;
-        }
-
-        @media (max-width: 767px) {
-            #darkModeToggle span:not(.fa-sun):not(.fa-moon),
-            #signOutLink span:not(.fa-sign-out-alt) {
-                display: none;
-            }
-        }
-
-        .dark.bg-spot-pattern {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            position: relative;
-        }
-
-    
-
-        .dark.bg-spot-pattern::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 10.5%);
-            background-size: 12px 12px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-        
-
-        .light.bg-spot-pattern {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            position: relative;
-        }
-
-        .light.bg-spot-pattern:before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.5%);
-            background-size: 12px 12px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="font-sans bg-spot-pattern min-h-screen flex flex-col items-center justify-center bg-spot-pattern" id="themeBody">
-    <header class="sticky top-0 z-20 shadow-sm w-full">
+    <header class="fixed top-0 z-20 shadow-sm w-full">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <a href="dashboard.html" class="flex items-center space-x-3 text-[var(--primary-color)]">
+                <a href="javascript:void(0);" class="flex items-center space-x-3 text-[var(--primary-color)]">
                     <img src="data/logo.png" alt="Logo" class="h-10 w-10" />
                     <span class="text-xl font-bold tracking-wide md:inline-block hidden">AskMyModule</span>
                 </a>
@@ -197,18 +36,18 @@
             </div>
             
             <!-- login form -->
-            <form action="app/login.php" method="POST" class="space-y-6">
+            <form action="" method="POST" id="login-form" class="space-y-6">
                 <!-- username -->
                 <div>
-                    <label for="username" class="block text-sm font-medium text-[var(--text-primary)]">Username</label>
-                    <input type="text" id="username" name="username" required class="w-full rounded-md px-4 py-3 mt-1" aria-required="true" tabindex="1">
+                    <label for="user_name" class="block text-sm font-medium text-[var(--text-primary)]">Username</label>
+                    <input type="text" id="user_name" name="user_name" required class="w-full rounded-md px-4 py-3 mt-1" aria-required="true" tabindex="1">
                 </div>
                 <!-- /username -->
 
                 <!-- password -->
                 <div>
-                    <label for="password" class="block text-sm font-medium text-[var(--text-primary)]">Password</label>
-                    <input type="password" id="password" name="password" required class="w-full rounded-md px-4 py-3 mt-1" aria-required="true" tabindex="2">
+                    <label for="hashed_password" class="block text-sm font-medium text-[var(--text-primary)]">Password</label>
+                    <input type="password" id="hashed_password" name="hashed_password" required class="w-full rounded-md px-4 py-3 mt-1" aria-required="true" tabindex="2">
                 </div>
                 <!-- /password -->
 
@@ -222,20 +61,8 @@
         </div>
     </main>
 
-    <script>
-        const toggle = document.getElementById('darkModeToggle');
-        const body = document.getElementById('themeBody');
-
-        // Load theme from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        body.classList.add(savedTheme);
-
-        toggle.addEventListener('click', () => {
-            const isLight = body.classList.contains('light');
-            body.classList.toggle('light', !isLight);
-            body.classList.toggle('dark', isLight);
-            localStorage.setItem('theme', isLight ? 'dark' : 'light');
-        });
-    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/toggle_theme.js"></script>
 </body>
 </html>

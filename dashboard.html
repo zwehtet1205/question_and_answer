@@ -8,169 +8,7 @@
     <link rel="icon" href="data/logo.png" type="image/png" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #F37021;
-            --primary-hover: #e55e0f;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --bg-primary: #ffffff;
-            --bg-secondary: #f9fafb;
-            --border-color: #e5e7eb;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --tag-bg: #e5e7eb;
-            --tag-text: #374151;
-            --answered-bg: #15803d;
-            --answered-text: #d1fae5;
-            --link-hover: #c05621;
-        }
-
-        .dark {
-            --text-primary: #f5f5f5;
-            --text-secondary: #d1d5db;
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --border-color: #374151;
-            --glass-bg: #1a1a1a;
-            --glass-border: #374151;
-            --tag-bg: #4b5563;
-            --tag-text: #fef08a;
-            --answered-bg: #16a34a;
-            --answered-text: #dcfce7;
-            --link-hover: #f97316;
-        }
-
-        body {
-            /* background-color: var(--bg-primary); */
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .glass {
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            background-color: var(--glass-bg);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .primary-text {
-            color: var(--primary-color);
-        }
-
-        .primary-bg {
-            background-color: var(--primary-color);
-            transition: background-color 0.3s ease;
-        }
-
-        .primary-bg:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .tag {
-            background-color: var(--tag-bg);
-            color: var(--tag-text);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .answered {
-            background-color: var(--answered-bg);
-            color: var(--answered-text);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .link-hover:hover {
-            color: var(--link-hover);
-        }
-
-        input,
-        select,
-        textarea {
-            background-color: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.2);
-        }
-
-        header {
-            background-color: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        footer {
-            background-color: var(--bg-primary);
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            transition: border-color 0.3s ease, color 0.3s ease;
-        }
-
-        #darkModeToggle .fa-sun,
-        .dark #darkModeToggle .fa-moon {
-            display: inline;
-        }
-
-        #darkModeToggle .fa-moon,
-        .dark #darkModeToggle .fa-sun {
-            display: none;
-        }
-
-        #signOutLink .fa-sign-out-alt {
-            display: inline;
-        }
-
-        @media (max-width: 767px) {
-
-            #darkModeToggle span:not(.fa-sun):not(.fa-moon),
-            #signOutLink span:not(.fa-sign-out-alt) {
-                display: none;
-            }
-        }
-
-        .dark.bg-spot-pattern {
-            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
-            position: relative;
-            background-attachment: fixed;
-        }
-
-    
-
-        .dark.bg-spot-pattern::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 10%, transparent 10.5%);
-            background-size: 12px 12px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-        
-
-        .light.bg-spot-pattern {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            position: relative;
-        }
-
-        .light.bg-spot-pattern:before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 10%, transparent 10.5%);
-            background-size: 12px 12px;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="font-sans min-h-screen bg-spot-pattern" id="themeBody">
@@ -191,7 +29,7 @@
                 <a id="signOutLink" href="app/logout.php"
                     class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span class="md:inline-block">Sign Out</span>
+                    <span class="hidden md:inline-block">Sign Out</span>
                 </a>
             </nav>
         </div>
@@ -332,22 +170,9 @@
         </div>
     </footer>
 
-    <script>
-        const toggle = document.getElementById('darkModeToggle');
-        const body = document.getElementById('themeBody');
-
-        // Load theme from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        body.classList.add(savedTheme);
-
-        toggle.addEventListener('click', () => {
-            const isLight = body.classList.contains('light');
-            body.classList.toggle('light', !isLight);
-            body.classList.toggle('dark', isLight);
-
-            localStorage.setItem('theme', isLight ? 'dark' : 'light');
-        });
-    </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/toggle_theme.js"></script>
 </body>
 
 </html>

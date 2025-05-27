@@ -1,0 +1,42 @@
+[
+  {
+    "user_name": "STUDENT1",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "student"
+  },
+  {
+    "user_name": "STUDENT2",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "student"
+  },
+  {
+    "user_name": "STUDENT3",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "student"
+  },
+  {
+    "user_name": "STUDENT4",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "student"
+  },
+  {
+    "user_name": "STUDENT5",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "student"
+  },
+  {
+    "user_name": "CSMSTAFF1",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "staff"
+  },
+  {
+    "user_name": "CSMSTAFF2",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "staff"
+  },
+  {
+    "user_name": "CSMSTAFF3",
+    "hashed_password": "$2y$10$uJwa86so2wahXC1TrE7/gODi3dbvvNWLiTrTBH9scyiaV2IvQcHYm",
+    "user_type": "staff"
+  }
+]

@@ -1,49 +1,51 @@
 <?php
-session_start();
 
-// Get filter values 
-$module = $_GET['module'] ?? '';
-$status = $_GET['status'] ?? '';
+require_once 'helpers.php';
 
-// Get all questions
-$questions = json_decode(file_get_contents('../data/questions.json'), true) ?: [];
+startSession();
 
-// Get all answers 
-$answers = json_decode(file_get_contents('../data/answers.json'), true) ?: [];
+// Sanitize input
+$module = isset($_GET['module']) ? sanitizeInput($_GET['module']) : '';
+$status = isset($_GET['status']) ? sanitizeInput($_GET['status']) : '';
 
-// Get all question IDs that are answered 
-$answered_ids = array_column($answers, 'question_id');
+// Load data 
+$questions = readJsonFile('../data/questions.json');
+$answers = readJsonFile('../data/answers.json');
 
-// Filter questions based on module and status
-$filtered_questions = array_filter($questions, function($question) use ($module, $status, $answered_ids) {
-    return ($module ? $question["module"] === $module : true) &&  
-            ($status ? 
-                ($status === 'answered' ?  
-                    in_array($question['id'], $answered_ids) :  
-                    !in_array($question['id'], $answered_ids)
-                ) : 
-                true
-            );
+// Get answered question IDs
+$answeredIds = array_column($answers, 'question_id');
+
+// Filter questions
+$filtered = array_filter($questions, function ($q) use ($module, $status, $answeredIds) {
+    $matchModule = $module ? $q['module'] === $module : true;
+
+    $matchStatus = true;
+    if ($status === 'answered') {
+        $matchStatus = in_array($q['id'], $answeredIds);
+    } elseif ($status === 'unanswered') {
+        $matchStatus = !in_array($q['id'], $answeredIds);
+    }
+
+    return $matchModule && $matchStatus;
 });
 
-// Sort questions 
-usort($filtered_questions, function($a, $b) {
-    return $b['priority'] <=> $a['priority'];
+// Sort questions by timestamp
+usort($filtered, function ($a, $b) {
+    return $b['timestamp'] <=> $a['timestamp'];
 });
 
-// Attach answers to questions
+// Get answers
 $results = [];
-foreach ($filtered_questions as $question) {
-    $question_answers = array_filter($answers, function($answer) use ($question) {
-        return $answer['question_id'] === $question['id'];
+foreach ($filtered as $q) {
+    $relatedAnswers = array_filter($answers, function ($a) use ($q) {
+        return $a['question_id'] === $q['id'];
     });
 
     $results[] = [
-        'question' => $question,
-        'answers' => array_values($question_answers)
+        'question' => $q,
+        'answers' => array_values($relatedAnswers),
     ];
 }
 
-// Set content type header and output JSON
-header('Content-Type: application/json');
-echo json_encode($results);
+// Return JSON response
+sendJsonResponse($results);

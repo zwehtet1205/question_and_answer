@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Question Detail - AskMyModule</title>
+  <link rel="icon" href="data/logo.png" type="image/png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="font-sans min-h-screen bg-spot-pattern" id="themeBody">
+  <header class="sticky top-0 z-20 shadow-sm bg-[var(--bg-header)] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="dashboard.html" class="flex items-center space-x-3 text-[var(--primary-color)]">
+        <img src="data/logo.png" alt="Logo" class="h-10 w-10" />
+        <span class="text-xl font-bold tracking-wide hidden md:inline-block">AskMyModule</span>
+      </a>
+      <nav class="flex space-x-4 items-center">
+        <button id="darkModeToggle" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
+          <i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="md:inline-block">Toggle Theme</span>
+        </button>
+        <a href="app/logout.php" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
+          <i class="fas fa-sign-out-alt"></i><span class="hidden md:inline-block">Sign Out</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-6 py-12 space-y-12">
+
+    <div class="mb-6">
+      <a href="dashboard.html"
+        class="inline-flex items-center text-sm font-medium text-[var(--primary-color)] hover:underline">
+        <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+      </a>
+    </div>
+
+
+
+    <article class="glass p-6 rounded-xl relative">
+
+      <div class="flex gap-4">
+        <!-- Vote Block -->
+        <div class="flex flex-col items-center gap-1 w-10">
+          <button class="vote-btn upvote text-gray-400 hover:text-green-500 transition" data-id="123"
+            aria-label="Upvote">
+            <i class="fas fa-chevron-up text-xl"></i>
+          </button>
+          <span class="vote-count text-sm font-semibold">12</span>
+          <button class="vote-btn downvote text-gray-400 hover:text-red-500 transition" data-id="123"
+            aria-label="Downvote">
+            <i class="fas fa-chevron-down text-xl"></i>
+          </button>
+        </div>
+
+        <!-- Main Question or Content Block -->
+        <div class="flex-1">
+          <h1 class="text-2xl md:text-3xl font-bold mb-2">How do I deploy my Laravel app to Heroku?</h1>
+          <p class="text-sm text-gray-400 mb-4">
+            Posted by <span class="text-gray-200 font-semibold">John Doe</span> on
+            <span class="italic">May 25, 2025</span> in
+            <span class="primary-text font-medium">Web Development</span>
+          </p>
+          <div class="text-sm flex flex-wrap gap-2 mb-4">
+            Tags:
+            <span class="px-2 py-0.5 rounded tag">laravel</span>
+            <span class="px-2 py-0.5 rounded tag">heroku</span>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+
+    <section class="space-y-6">
+      <h2 class="text-xl font-semibold primary-text">Answers</h2>
+
+      <!-- Example Answer -->
+      <div class="glass p-5 rounded-xl">
+        <p class="text-[var(--text-primary)]">Make sure your database configuration uses environment variables supported
+          by Heroku. Also, use a buildpack for PHP and clear caches after deployment.</p>
+        <p class="text-sm text-gray-400 mt-3">
+          Answered by <span class="text-gray-200 font-medium">Jane Smith</span> on
+          <span class="italic">May 26, 2025</span>
+        </p>
+      </div>
+
+      <!-- Another answer -->
+      <div class="glass p-5 rounded-xl">
+        <p class="text-[var(--text-primary)]">Add `php artisan config:cache` and `php artisan migrate` in your release
+          phase. Ensure your `APP_KEY` is set in Heroku config vars too.</p>
+        <p class="text-sm text-gray-400 mt-3">
+          Answered by <span class="text-gray-200 font-medium">Alex Tan</span> on
+          <span class="italic">May 27, 2025</span>
+        </p>
+      </div>
+    </section>
+
+    <section class="glass p-6 rounded-xl">
+      <h2 class="text-xl font-semibold primary-text mb-4">Your Answer</h2>
+      <form action="app/post_answer.php" method="POST" class="space-y-5">
+        <input type="hidden" name="question_id" value="123" />
+        <div>
+          <label for="answer" class="block text-sm mb-1">Answer</label>
+          <textarea name="answer" id="answer" rows="5" required
+            class="w-full rounded-lg px-4 py-3 bg-charcoal bg-opacity-40 border border-gray-700 text-gray-100 resize-y"></textarea>
+        </div>
+        <button type="submit" class="primary-bg hover:bg-orange-600 text-white font-semibold rounded-lg px-6 py-3">Post
+          Answer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="mt-16 py-12 bg-[var(--bg-header)] border-t transition-colors">
+    <div class="max-w-7xl mx-auto px-6">
+      <p class="text-center text-sm text-[var(--text-secondary)]">© 2025 AskMyModule. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/toggle_theme.js"></script>
+</body>
+
+</html>
