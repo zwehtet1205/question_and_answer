@@ -1,0 +1,22 @@
+[
+  {
+    "code": "5230COMP",
+    "name": "Mobile and Web Development",
+    "tutor": "CSMSTAFF1"
+  },
+  {
+    "code": "4300COMP",
+    "name": "Programming in Java",
+    "tutor": "CSMSTAFF1"
+  },
+  {
+    "code": "4500COMP",
+    "name": "Computer Systems Architecture",
+    "tutor": "CSMSTAFF3"
+  },
+  {
+    "code": "6555COMP",
+    "name": "Advanced AI",
+    "tutor": "CSMSTAFF2"
+  }
+]

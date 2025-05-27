@@ -26,7 +26,7 @@ $(document).ready(function () {
     }
 
     function fetchModules() {
-        $.getJSON('app/get_modules.php')
+        $.getJSON('app/modules.php')
             .done(data => {
                 let html = Array.isArray(data)
                     ? data.map(item => `<option value="${item.code}">${item.name}</option>`).join('')
@@ -59,6 +59,24 @@ $(document).ready(function () {
 
           return `
               <article class="glass p-6 rounded-xl" role="article" aria-labelledby="question-${q.id}">
+                  <div class="flex gap-4">
+                  <!-- Vote Block -->
+                  <div class="flex flex-col items-center gap-1 w-10">
+                    <button class="vote-btn upvote text-gray-400 hover:text-green-500 transition" data-id="123"
+                      aria-label="Upvote">
+                      <i class="fas fa-chevron-up text-xl"></i>
+                    </button>
+                    <span class="vote-count text-sm font-semibold">12</span>
+                    <button class="vote-btn downvote text-gray-400 hover:text-red-500 transition" data-id="123"
+                      aria-label="Downvote">
+                      <i class="fas fa-chevron-down text-xl"></i>
+                    </button>
+                  </div>
+
+                  <!-- Main Question or Content Block -->
+                  <div class="flex-1">
+                    
+                  
                   <h3 id="question-${q.id}"
                       class="text-lg font-semibold cursor-pointer hover:text-[var(--primary-color)] transition-colors">
                       ${q.question || 'Untitled Question'}
@@ -74,6 +92,8 @@ $(document).ready(function () {
                       ${answeredBadge}
                       <a href="#q${q.id}" class="text-sm font-medium text-[var(--primary-color)] link-hover">View Answers →</a>
                   </div>
+                  </div>
+                </div>
               </article>
           `;
       }).join('');
@@ -127,7 +147,7 @@ $(document).ready(function () {
     function checkLoginStatus() {
         $.getJSON('app/is_auth.php')
             .done(data => {
-                if (!data.is_auth) window.location.href = 'index.html';
+                if (!data.is_authenticated) window.location.href = 'index.html';
             })
             .fail((xhr, status, error) => {
                 console.error('Login check failed:', error);
