@@ -109,7 +109,7 @@ $(document).ready(function () {
             answerSection.find('.glass').remove(); // Clear old content
 
             if (answers.length === 0) {
-                answerSection.append('<p class="text-gray-400" id="no-answer">No answers yet. Be the first to contribute!</p>');
+                answerSection.append('<p class="text-gray-400" id="no-answer">No answers yet.</p>');
             } else {
                 answers.forEach(answer => {
                     const answerText = decodeHTMLEntities(answer.answer || '');
