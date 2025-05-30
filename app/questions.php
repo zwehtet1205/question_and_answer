@@ -1,24 +1,29 @@
 <?php
 
+// include helpers 
 require_once 'helpers.php';
 
+// start session 
 startSession();
 
-// Sanitize input
+// get and clean input
 $module = isset($_GET['module']) ? sanitizeInput($_GET['module']) : '';
 $status = isset($_GET['status']) ? sanitizeInput($_GET['status']) : '';
 
-// Load data 
+// get data 
 $questions = readJsonFile('../data/questions.json');
 $answers = readJsonFile('../data/answers.json');
 
-// Get answered question IDs
+// get answered question IDs
 $answeredIds = array_column($answers, 'question_id');
 
-// Filter questions
+// filter questions
 $filtered = array_filter($questions, function ($q) use ($module, $status, $answeredIds) {
+    
+    // filter with module 
     $matchModule = $module ? $q['module'] === $module : true;
 
+    // filter with status 
     $matchStatus = true;
     if ($status === 'answered') {
         $matchStatus = in_array($q['id'], $answeredIds);
@@ -29,23 +34,36 @@ $filtered = array_filter($questions, function ($q) use ($module, $status, $answe
     return $matchModule && $matchStatus;
 });
 
-// Sort questions by timestamp
+
+foreach ($filtered as &$q) {
+    // count votes 
+    $q['votes'] = getVotes($q['id']);
+
+    // check if answered or not
+    $q['answered'] = in_array($q['id'], $answeredIds);
+}
+unset($q);
+
+// sort questions by votes
 usort($filtered, function ($a, $b) {
-    return $b['timestamp'] <=> $a['timestamp'];
+    return $b['votes'] <=> $a['votes'];
 });
 
-// Get answers
-$results = [];
-foreach ($filtered as $q) {
-    $relatedAnswers = array_filter($answers, function ($a) use ($q) {
-        return $a['question_id'] === $q['id'];
-    });
+// get total questions 
+$total_questions = count($filtered);
 
-    $results[] = [
-        'question' => $q,
-        'answers' => array_values($relatedAnswers),
-    ];
-}
+// get total answered questions 
+$total_answered_questions = count(array_filter($filtered, function($q) use($answeredIds){
+    return in_array($q['id'],$answeredIds);
+}));
 
-// Return JSON response
-sendJsonResponse($results);
+// get total unanswered questions 
+$total_unanswered_questions = $total_questions - $total_answered_questions;
+
+// send json response 
+sendJsonResponse([
+    'questions' => $filtered,
+    'total_questions' => $total_questions,
+    'total_answered_questions' => $total_answered_questions,
+    'total_unanswered_questions' => $total_unanswered_questions
+]);

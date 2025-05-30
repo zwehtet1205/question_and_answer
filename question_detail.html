@@ -4,124 +4,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Question Detail - AskMyModule</title>
-  <link rel="icon" href="data/logo.png" type="image/png" />
+
+  <!-- title  -->
+  <title>AskMyModule - Question Detail</title>
+  
+  <!-- icon  -->
+  <link rel="icon" href="img/logo.png" type="image/png" />
+  
+  <!-- tailwind css -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  
+  <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- custom css -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="font-sans min-h-screen bg-spot-pattern" id="themeBody">
+
+  <!-- header section  -->
   <header class="sticky top-0 z-20 shadow-sm bg-[var(--bg-header)] transition-colors">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+      <!-- logo and brand name -->
       <a href="dashboard.html" class="flex items-center space-x-3 text-[var(--primary-color)]">
-        <img src="data/logo.png" alt="Logo" class="h-10 w-10" />
+        <img src="img/logo.png" alt="Logo" class="h-10 w-10" />
         <span class="text-xl font-bold tracking-wide hidden md:inline-block">AskMyModule</span>
       </a>
+
+      <!-- toggle theme and sign out -->
       <nav class="flex space-x-4 items-center">
         <button id="darkModeToggle" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
           <i class="fas fa-sun"></i><i class="fas fa-moon"></i><span class="md:inline-block">Toggle Theme</span>
         </button>
-        <a href="app/sign_out.php" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
+        <a id="signOutLink" href="javascript:void(0);" onclick="signOut()" class="border px-3 py-1.5 rounded text-sm flex items-center space-x-2">
           <i class="fas fa-sign-out-alt"></i><span class="hidden md:inline-block">Sign Out</span>
         </a>
       </nav>
     </div>
   </header>
+  <!-- /header section  -->
 
+  <!-- main section  -->
   <main class="max-w-4xl mx-auto px-6 py-12 space-y-12">
 
+    <!-- back to dashboard link -->
     <div class="mb-6">
       <a href="dashboard.html"
         class="inline-flex items-center text-sm font-medium text-[var(--primary-color)] hover:underline">
         <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
       </a>
     </div>
+    <!-- /back to dashboard link -->
 
-
-
+    <!-- question detail -->
     <article class="glass p-6 rounded-xl relative">
 
       <div class="flex gap-4">
-        <!-- Vote Block -->
-        <div class="flex flex-col items-center gap-1 w-10">
-          <button class="vote-btn upvote text-gray-400 hover:text-green-500 transition" data-id="123"
+        <!-- vote section -->
+        <div class="flex flex-col items-center gap-1 w-10 vote-form">
+
+          <!-- up vote button -->
+          <button class="vote-btn upvote text-gray-400 hover:text-green-500 transition" 
             aria-label="Upvote">
             <i class="fas fa-chevron-up text-xl"></i>
           </button>
-          <span class="vote-count text-sm font-semibold">12</span>
-          <button class="vote-btn downvote text-gray-400 hover:text-red-500 transition" data-id="123"
+          
+          <!-- vote count -->
+          <span class="vote-count text-sm font-semibold">0</span>
+          
+          <!-- down vote button -->
+          <button class="vote-btn downvote text-gray-400 hover:text-red-500 transition" 
             aria-label="Downvote">
             <i class="fas fa-chevron-down text-xl"></i>
           </button>
         </div>
+        <!-- /vote section -->
 
-        <!-- Main Question or Content Block -->
+        <!-- question content section -->
         <div class="flex-1">
-          <h1 class="text-2xl md:text-3xl font-bold mb-2">How do I deploy my Laravel app to Heroku?</h1>
+
+          <!-- question  -->
+          <h1 class="text-2xl md:text-3xl font-bold mb-2">This is sample questions</h1>
+
+          <!-- question metadata -->
           <p class="text-sm text-gray-400 mb-4">
             Posted by <span class="text-gray-200 font-semibold">John Doe</span> on
-            <span class="italic">May 25, 2025</span> in
-            <span class="primary-text font-medium">Web Development</span>
+            <span class="italic">May 26, 2025</span> in
+            <span class="primary-text font-medium">Module</span>
           </p>
-          <div class="text-sm flex flex-wrap gap-2 mb-4">
-            Tags:
-            <span class="px-2 py-0.5 rounded tag">laravel</span>
-            <span class="px-2 py-0.5 rounded tag">heroku</span>
-          </div>
+
         </div>
+        <!-- /question content section -->
+
       </div>
 
     </article>
+    <!-- /question detail -->
 
 
-    <section class="space-y-6">
+    <!-- answer section -->
+    <section id="answer-section" class="space-y-6">
       <h2 class="text-xl font-semibold primary-text">Answers</h2>
 
-      <!-- Example Answer -->
+      <!-- sample Answer -->
       <div class="glass p-5 rounded-xl">
-        <p class="text-[var(--text-primary)]">Make sure your database configuration uses environment variables supported
-          by Heroku. Also, use a buildpack for PHP and clear caches after deployment.</p>
+        <p class="text-[var(--text-primary)]">this is example answer</p>
         <p class="text-sm text-gray-400 mt-3">
           Answered by <span class="text-gray-200 font-medium">Jane Smith</span> on
           <span class="italic">May 26, 2025</span>
         </p>
       </div>
 
-      <!-- Another answer -->
-      <div class="glass p-5 rounded-xl">
-        <p class="text-[var(--text-primary)]">Add `php artisan config:cache` and `php artisan migrate` in your release
-          phase. Ensure your `APP_KEY` is set in Heroku config vars too.</p>
-        <p class="text-sm text-gray-400 mt-3">
-          Answered by <span class="text-gray-200 font-medium">Alex Tan</span> on
-          <span class="italic">May 27, 2025</span>
-        </p>
-      </div>
     </section>
+    <!-- /answer section -->
 
-    <section class="glass p-6 rounded-xl">
+    <!-- answer form section -->
+    <section class="glass p-6 rounded-xl hidden" id="answer-form-container">
+
       <h2 class="text-xl font-semibold primary-text mb-4">Your Answer</h2>
-      <form action="app/post_answer.php" method="POST" class="space-y-5">
-        <input type="hidden" name="question_id" value="123" />
+
+      <!-- ask from  -->
+      <form id="answer-form" class="space-y-5" aria-describedby="answer-info">
+
+        <!-- hidden text for screen readers -->
+        <p id="answer-info" class="sr-only">Submit an answer to the question.</p>
+
+        <!-- hidden question id -->
+        <input type="hidden" name="question_id" />
+
+        <!-- answer textarea -->
         <div>
           <label for="answer" class="block text-sm mb-1">Answer</label>
-          <textarea name="answer" id="answer" rows="5" required
-            class="w-full rounded-lg px-4 py-3 bg-charcoal bg-opacity-40 border border-gray-700 text-gray-100 resize-y"></textarea>
+          <textarea name="answer" id="answer" rows="5" required aria-required="true"
+            class="w-full rounded-lg px-4 py-3 bg-charcoal bg-opacity-40 border border-gray-700 resize-y"></textarea>
         </div>
+
+        <!-- submit button -->
         <button type="submit" class="primary-bg hover:bg-orange-600 text-white font-semibold rounded-lg px-6 py-3">Post
           Answer</button>
-      </form>
-    </section>
-  </main>
 
+      </form>
+      <!-- /ask form  -->
+
+    </section>
+    <!-- /ask form section  -->
+
+  </main>
+  <!-- /main section  -->
+
+
+  <!-- footer section  -->
   <footer class="mt-16 py-12 bg-[var(--bg-header)] border-t transition-colors">
+
+    <!-- copyright -->
     <div class="max-w-7xl mx-auto px-6">
       <p class="text-center text-sm text-[var(--text-secondary)]">© 2025 AskMyModule. All rights reserved.</p>
     </div>
   </footer>
+  <!-- /footer section  -->
 
+  <!-- notificatioin message  -->
+  <div class="fixed top-4 right-4 z-50">
+    <div id="notification"  class="hidden bg-green-500 text-white px-4 py-2 rounded shadow-lg"><span id="notification-message"></span></div>
+  </div>
+
+  <!-- preloader  -->
+  <div id="preloader" class="fixed inset-0 bg-[var(--bg-header)] flex items-center justify-center z-50">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--text-primary)]"></div>
+  </div>
+
+  <!-- jquey  -->
   <script src="js/jquery.min.js"></script>
+
+  <!-- custom js  -->
+  <script src="js/preloader.js"></script>
   <script src="js/toggle_theme.js"></script>
+  <script src="js/question_detial.js"></script>
+  <script src="js/logout.js"></script>
+  
 </body>
 
 </html>

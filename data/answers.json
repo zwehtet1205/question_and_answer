@@ -10,5 +10,35 @@
         "answer": "You can center a div by three ways.",
         "answered_by": "CSMSTAFF1",
         "timestamp": "2025-04-15T06:48:39+00:00"
+    },
+    {
+        "question_id": 4,
+        "answer": "HTML is called hypertext markup language",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-30T07:32:37+00:00"
+    },
+    {
+        "question_id": 5,
+        "answer": "OOP is called Object Oriented Programming",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-30T07:35:01+00:00"
+    },
+    {
+        "question_id": 7,
+        "answer": "Ai is called artificial intelligence",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-30T07:37:39+00:00"
+    },
+    {
+        "question_id": 21,
+        "answer": "Flutter is a cross platform language",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-30T07:45:52+00:00"
+    },
+    {
+        "question_id": 14,
+        "answer": "Html is a markup language",
+        "answered_by": "CSMSTAFF1",
+        "timestamp": "2025-05-30T07:49:47+00:00"
     }
 ]

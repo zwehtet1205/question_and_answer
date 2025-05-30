@@ -1,9 +1,10 @@
 <?php
 
+// include helper 
 require_once 'helpers.php';
 
-const JSON_FILE_PATH = '../data/module_data.json';
+// get modules from json file 
+$modules = readJsonFile('../data/module_data.json');
 
-$modules = readJsonFile(JSON_FILE_PATH);
-
+// send json response
 sendJsonResponse($modules);

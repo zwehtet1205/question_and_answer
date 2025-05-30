@@ -1,9 +1,16 @@
 <?php
+
+    // include helpers
     require_once 'helpers.php';
+
+    // start session 
     startSession();
-    // Clear session variables
+    
+    // destroy session 
     destroySession();
-    // Redirect to login page
-    redirectTo('../index.html');
-    exit;
+
+    // send json response
+    sendJsonResponse([
+        'success' => true,
+    ])
 ?>

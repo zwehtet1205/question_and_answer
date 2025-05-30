@@ -1,45 +1,50 @@
 <?php
 
+// include helpers
 require_once 'helpers.php';
 
+// start session 
 startSession();
 
+// check method is post 
 checkRequestMethod('POST');
 
-// Sanitize input using helper
+// get and clean input
 $username = sanitizeInput($_POST['user_name'] ?? '');
 $password = sanitizeInput($_POST['hashed_password'] ?? '');
 
-// Load user database safely
+// get users 
 $users = readJsonFile('../data/users_db.json');
+
 
 $isAuthenticated = false;
 
 foreach ($users as $user) {
-    if (
-        $user['user_name'] === $username &&
-        password_verify($password, $user['hashed_password'])
-    ) {
-        // Set session via helper
+
+    // check if username and password is correct 
+    if ($user['user_name'] === $username &&password_verify($password, $user['hashed_password'])) {
+        
+        // set session variable 
         setSessionVariable('user_name', $user['user_name']);
         setSessionVariable('user_type', $user['user_type']);
 
+        // regenerate session id 
+        session_regenerate_id();
+
         $isAuthenticated = true;
 
-        // Redirect to dashboard
+        // send json response 
         sendJsonResponse([
             'status' => 'success',
             'message' => 'Login successful',
             'redirect_url' => getBaseUrl().'dashboard.html'
         ]);
 
-        
     }
 }
 
-// Invalid credentials
+// invalid credentials 
 if (!$isAuthenticated) {
-    setMessage('error', 'Invalid username or password.');
     sendJsonResponse([
         'status' => 'error',
         'message' => 'Invalid username or password.'
