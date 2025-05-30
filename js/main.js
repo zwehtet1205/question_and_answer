@@ -1,12 +1,20 @@
 
 $(document).ready(function () {
+
+    // initialize variables
+    const askQuestionForm = $('#ask-question-form');
+    const askQuestionFormContainer = $('#ask-question-form-container');
+    const quickStatsSection = $('#quick-stats-section');
+    const quickStatsTotalQuestions = $('#quick-stats-section #total-questions');
+    const quickStatsAnswered = $('#quick-stats-section #answered');
+    const quickStatsUnanswered = $('#quick-stats-section #unanswered');
     const questionList = $('#question-list');
     const filterModule = $('#filter-module');
     const filterStatus = $('#filter-status');
-    
     const notification = $('#notification');
     const notificationMessage = $('#notification-message');
 
+    // notification
     function showNotification(message, type) {
         const isError = type === 'error';
         notificationMessage.text(message);
@@ -17,34 +25,39 @@ $(document).ready(function () {
         }, 5000);
     }
 
-    checkLoginStatus();
-    fetchModules();
-    fetchQuestions();
-    fetchUserRole();
-    handleURLNotifications();
+    // load initial data
+    checkLoginStatus();  // check if user is logged in
+    fetchModules(); // fetch modules for module dropdown
+    fetchQuestions(); // fetch questions with default filters
+    fetchUserRole(); // fetch user role to show/hide ask question form 
 
+    // event listeners
     filterModule.on('change', () => applyFilters());
     filterStatus.on('change', () => applyFilters());
-
     questionList.on('click', '.vote-btn.upvote', function () {
         console.log('clicked');
         const questionId = $(this).data('id');
         if (questionId) voteQuestion(questionId);
     });
-
     questionList.on('click', '.vote-btn.downvote', function () {
         console.log('clicked');
         const questionId = $(this).data('id');
         if (questionId) downVoteQuestion(questionId);
     });
 
-    $('#ask-question-form').on('submit', function (e) {
+    // handle ask question form submission
+    askQuestionForm.on('submit', function (e) {
         e.preventDefault();
+
+        // get input values 
         const module = $('#module').val();
         const question = $('#question').val();
+
+        // validate inputs
         if (module && question) askQuestion(module, question);
     });
 
+    // handle  fetching modules 
     function fetchModules() {
         $.getJSON('app/modules.php')
             .done(data => {
@@ -61,6 +74,7 @@ $(document).ready(function () {
             });
     }
 
+    // handle fetching questions with filters
     function fetchQuestions(filters = {}) {
         $.getJSON('app/questions.php', filters)
             .done(data => {
@@ -76,6 +90,7 @@ $(document).ready(function () {
             });
     }
 
+    // handle fetching user role to show/hide ask question form
     function fetchUserRole() {
         $.getJSON('app/user_type.php')
             .done(data => {
@@ -84,6 +99,7 @@ $(document).ready(function () {
             .fail(error => console.error('Role fetch failed:', error));
     }
 
+    // check if user is logged in
     function checkLoginStatus() {
         $.getJSON('app/is_auth.php')
             .done(data => {
@@ -95,6 +111,7 @@ $(document).ready(function () {
             });
     }
 
+    // handle questions rendering
     function renderQuestions(data) {
         if (!Array.isArray(data)) {
             questionList.html('<p class="text-gray-300">No questions found or invalid data format.</p>');
@@ -147,6 +164,7 @@ $(document).ready(function () {
         questionList.html(html || '<p class="text-gray-300">No questions found.</p>');
     }
 
+    // handle voting on questions
     function voteQuestion(id) {
         $.post('app/up_vote.php', { question_id: id }, 'json')
             .done(response => {
@@ -156,6 +174,7 @@ $(document).ready(function () {
             .fail(xhr => handleVoteError(xhr, 'voted'));
     }
 
+    // handle unvoting questions
     function downVoteQuestion(id) {
         $.post('app/down_vote.php', { question_id: id }, 'json')
             .done(response => {
@@ -165,10 +184,12 @@ $(document).ready(function () {
             .fail(xhr => handleVoteError(xhr, 'unvoted'));
     }
 
+    // update vote count in the UI
     function updateVoteCount(questionId, count) {
         $(`.vote-btn[data-id="${questionId}"]`).closest('.vote-form').find('.vote-count').text(count);
     }
 
+    // handle vote errors
     function handleVoteError(xhr, action) {
         const msg = xhr.status === 409 
         ? `Question already ${action}.` 
@@ -178,7 +199,7 @@ $(document).ready(function () {
         showNotification(msg, 'error');
     }
 
-
+    // handle time since function
     function timeSince(date) {
         const seconds = Math.floor((new Date() - date) / 1000);
         const intervals = [
@@ -196,6 +217,7 @@ $(document).ready(function () {
         return 'just now';
     }
 
+    // apply filters to questions
     function applyFilters() {
         fetchQuestions({
             module: filterModule.val(),
@@ -203,16 +225,7 @@ $(document).ready(function () {
         });
     }
 
-    function handleURLNotifications() {
-        const params = new URLSearchParams(window.location.search);
-        const error = params.get('error');
-        const success = params.get('success');
-
-        if (error === 'profanity_detected') showNotification('Profanity detected in your question.', 'error');
-        if (success === 'question_submitted') showNotification('Your question has been submitted.', 'success');
-        if (success === 'answer_posted') showNotification('Your answer has been posted.', 'success');
-    }
-
+    // handle question submission
     function askQuestion(module, question) {
         $.post('app/ask.php', { module, question }, 'json')
             .done(response => {
@@ -250,8 +263,7 @@ $(document).ready(function () {
     }
     
 
-
-
+    
     window.toggleAnswerForm = function (questionId) {
         $(`#answer-form-${questionId}, #toggle-answer-${questionId}`).toggleClass('hidden');
     };

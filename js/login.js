@@ -4,7 +4,6 @@ $(document).ready(function () {
     $.getJSON('app/is_auth.php')
         .done(function (data) {
             if (data.is_authenticated) {
-
                 // redirect to dashboard 
                 window.location.href = data.redirect_url || 'dashboard.html';
             } else {
@@ -44,6 +43,7 @@ $(document).ready(function () {
                     // redirect to dashboard 
                     window.location.href = response.redirect_url || 'dashboard.html';
                 } else {
+                    // show error message 
                     $('#error-message').text(response.message || 'Login failed.').removeClass('hidden');
                 }
             },

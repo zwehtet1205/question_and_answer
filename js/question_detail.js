@@ -1,14 +1,12 @@
-$(window).on('load', function () {
-    $('#preloader').css({ transition: 'opacity 0.5s ease', opacity: 0 });
-    setTimeout(() => $('#preloader').hide(), 800);
-});
-
 $(document).ready(function () {
+
+    // initialize variables
     const notification = $('#notification');
     const notificationMessage = $('#notification-message');
     const answerSection = $('#answer-section');
     const questionId = getQueryParam('id');
 
+    // notification 
     function showNotification(message, type) {
         const isError = type === 'error';
         notificationMessage.text(message);
@@ -23,19 +21,23 @@ $(document).ready(function () {
         }, 5000);
     }
 
-    function getQueryParam(param) {
+    // get query parameter by name
+    function getQueryParam(name) {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
+        return urlParams.get(name);
     }
 
+    // get html 
     function decodeHTMLEntities(str) {
         return $('<textarea>').html(str).text();
     }
 
+    // update vote count
     function updateVoteCount(questionId, count) {
         $(`.vote-btn[data-id="${questionId}"]`).closest('.vote-form').find('.vote-count').text(count);
     }
 
+    // handle vote errors
     function handleVoteError(xhr, action) {
         console.log
         const msg = xhr.status === 409
@@ -47,6 +49,7 @@ $(document).ready(function () {
         showNotification(msg, 'error');
     }
 
+    // handle voting questions
     function voteQuestion(id) {
         $.post('app/up_vote.php', { question_id: id }, 'json')
             .done(response => {
@@ -56,6 +59,7 @@ $(document).ready(function () {
             .fail(xhr => handleVoteError(xhr, 'voted'));
     }
 
+    // handle unvoting questions
     function downVoteQuestion(id) {
         $.post('app/down_vote.php', { question_id: id }, 'json')
             .done(response => {
@@ -64,12 +68,13 @@ $(document).ready(function () {
             })
             .fail(xhr => handleVoteError(xhr, 'unvoted'));
     }
-
+    // get query parameter by name
     if (!questionId) {
         alert("No question ID provided.");
         return;
     }
 
+    // fetch question details
     $.ajax({
         type: 'GET',
         url: 'app/get_question.php',
@@ -91,10 +96,10 @@ $(document).ready(function () {
                 year: 'numeric', month: 'short', day: 'numeric'
             });
 
-            // Set question title
+            // set question title
             $('h1').text(questionText);
 
-            // Metadata and voting
+            // metadata and voting
             $('.vote-btn.upvote, .vote-btn.downvote').attr('data-id', q.id);
             $('input[name="question_id"]').val(q.id);
             $('.vote-count').text(q.votes || 0);
@@ -105,8 +110,8 @@ $(document).ready(function () {
                 in <span class="primary-text px-2 rounded font-medium">${module}</span>
             `);
 
-            // Render Answers
-            answerSection.find('.glass').remove(); // Clear old content
+            // render answers
+            answerSection.find('.glass').remove(); // clear old content
 
             if (answers.length === 0) {
                 answerSection.append('<p class="text-gray-400" id="no-answer">No answers yet.</p>');
@@ -138,6 +143,7 @@ $(document).ready(function () {
         }
     });
 
+    // fetch user role to show/hide answer form
     function fetchUserRole() {
         $.getJSON('app/user_type.php')
             .done(data => {
@@ -152,18 +158,22 @@ $(document).ready(function () {
             });
     }
 
+    // fetch user role
     fetchUserRole();
 
+    // handle voting buttons
     $(document).on('click', '.vote-btn.upvote', function () {
         const id = $(this).data('id');
         if (id) voteQuestion(id);
     });
 
+    // handle downvoting buttons
     $(document).on('click', '.vote-btn.downvote', function () {
         const id = $(this).data('id');
         if (id) downVoteQuestion(id);
     });
 
+    // handle answer form submission
     $('#answer-form').on('submit',function(e){
         e.preventDefault();
         const formData = $(this).serialize();
